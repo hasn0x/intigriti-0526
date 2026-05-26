@@ -149,7 +149,7 @@ data.forEach(t => {
     <p>The testimonial body is protected with <strong>DOMPurify</strong>. The display name is not. Any HTML stored in <code>user_name</code> executes in every visitor's browser when the testimonials page loads.</p>
     <div class="callout">
       <span class="callout-icon">i</span>
-      <span>The <code>/api/profile</code> endpoint accepts arbitrary HTML in the <code>name</code> parameter with no output encoding, storing it raw in the database.</span>
+      <span>Evidence that the value is persisted as-is server-side comes from <code>renderProfile()</code> itself — it populates the input field with <code>value="${currentUser.name}"</code>, meaning whatever was submitted is returned from the server unchanged. Verified at <a href="https://challenge-0526.intigriti.io/challenge#profile" target="_blank">#profile</a>.</span>
     </div>
   </section>
 
