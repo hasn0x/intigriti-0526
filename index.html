@@ -191,7 +191,24 @@ data.forEach(t => {
     <p>Encoding only the first character of a blocked keyword breaks pattern matching. <code>&amp;#97</code> decodes to <code>a</code> and the parser stops at <code>l</code> (non-digit), producing <code>alert</code> in the DOM — a string the server filter never matched.</p>
 
     <h3>Technique 3 — Auto-firing Event Handler</h3>
-    <p>All common event handlers were blocked, but <code>ontoggle</code> was overlooked. The <code>&lt;details open&gt;</code> element fires <code>toggle</code> the instant it connects to the DOM — <strong>no user interaction required</strong>.</p>
+    <p>All common event handlers were blocked. The remaining candidates each had a problem:</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Handler</th><th>Why it failed</th></tr></thead>
+        <tbody>
+          <tr><td>onerror / onload</td><td style="color:var(--red);font-size:13px;">Explicitly blocked by the server filter</td></tr>
+          <tr><td>onmouseover / onclick</td><td style="color:var(--text-3);font-size:13px;">Requires user interaction — not reliable</td></tr>
+          <tr><td>script</td><td style="color:var(--red);font-size:13px;">Keyword blocked by the server filter</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>
+      <code>ontoggle</code> was the answer — completely absent from the blocklist.
+      Combined with <code>&lt;details open&gt;</code>, it fires the <code>toggle</code> event
+      <strong>the instant the element connects to the DOM</strong>, requiring zero user interaction.
+      The <code>&lt;details&gt;</code> tag itself is a plain HTML5 element with no suspicious keywords,
+      making it invisible to signature-based filters.
+    </p>
   </section>
 
   <section>
