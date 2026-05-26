@@ -302,10 +302,11 @@ data.forEach(t => {
     <p>This challenge illustrates how inconsistent sanitization creates real vulnerabilities. The testimonial content was handled correctly — but one overlooked <code>innerHTML</code> assignment on an adjacent field was enough to compromise every user on the platform simultaneously.</p>
     <p>The filter bypass required no exotic tooling — only an understanding of how browsers decode HTML entities before parsing event handler attributes, and awareness of which event handlers auto-fire on DOM insertion.</p>
     <p>Special thanks to <strong>ayoub__intigriti</strong> and the Intigriti team for a well-constructed challenge.</p>
+    <p style="color:var(--text-3);font-size:13px;">Follow me on X: <a href="https://x.com/hasn0x" target="_blank">@hasn0x</a></p>
   </section>
 
   <footer>
-    <div class="footer-left">Write-up by <strong>hasn0x</strong> &nbsp;&middot;&nbsp; Intigriti Challenge 0526 &nbsp;&middot;&nbsp; May 2026</div>
+    <div class="footer-left">Write-up by <strong><a href="https://x.com/hasn0x" target="_blank" style="color:var(--text-2);border-bottom:1px solid var(--border);">hasn0x</a></strong> &nbsp;&middot;&nbsp; Intigriti Challenge 0526 &nbsp;&middot;&nbsp; May 2026</div>
     <div class="footer-right">Stored XSS &middot; Unintended Solution</div>
   </footer>
 
